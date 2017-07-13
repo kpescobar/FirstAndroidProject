@@ -3,11 +3,14 @@ package edu.cnm.bootcamp.kelly.firstandroidproject.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import edu.cnm.bootcamp.kelly.firstandroidproject.R;
 
 /**
@@ -21,21 +24,14 @@ import edu.cnm.bootcamp.kelly.firstandroidproject.R;
 public class ListFragment extends Fragment {
 
   private OnFragmentInteractionListener mListener;
+  private ListView mListView;
 
   public ListFragment() {
     // Required empty public constructor
   }
 
-  /**
-   * Use this factory method to create a new instance of
-   * this fragment using the provided parameters.
-   *
-   * @param param1 Parameter 1.
-   * @param param2 Parameter 2.
-   * @return A new instance of fragment ListFragment.
-   */
   // TODO: Rename and change types and number of parameters
-  public static ListFragment newInstance(String param1, String param2) {
+  public static ListFragment newInstance() {
     ListFragment fragment = new ListFragment();
     Bundle args = new Bundle();
     fragment.setArguments(args);
@@ -43,26 +39,30 @@ public class ListFragment extends Fragment {
   }
 
   @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    if (getArguments() != null) {
-      mParam1 = getArguments().getString(ARG_PARAM1);
-      mParam2 = getArguments().getString(ARG_PARAM2);
-    }
+  public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    String[] strings = new String[]{
+        "First",
+        "Second",
+        "Third",
+        "Fourth"
+    };
+
+    ArrayAdapter<String> adapter = new ArrayAdapter<>(
+        getContext(),
+        android.R.layout.simple_list_item_1,
+        strings
+    );
+
+    mListView.setAdapter(adapter);
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
-    return inflater.inflate(R.layout.fragment_list, container, false);
-  }
-
-  // TODO: Rename method, update argument and hook method into UI event
-  public void onButtonPressed(Uri uri) {
-    if (mListener != null) {
-      mListener.onFragmentInteraction(uri);
-    }
+    View view = inflater.inflate(R.layout.fragment_list, container, false);
+    mListView = (ListView)view.findViewById(R.id.fragmentList);
+    return view;
   }
 
   @Override
@@ -94,7 +94,29 @@ public class ListFragment extends Fragment {
    */
   public interface OnFragmentInteractionListener {
 
-    // TODO: Update argument type and name
-    void onFragmentInteraction(Uri uri);
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
