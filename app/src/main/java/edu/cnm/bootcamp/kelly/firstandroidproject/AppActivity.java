@@ -9,6 +9,7 @@ import android.view.View;
 import edu.cnm.bootcamp.kelly.firstandroidproject.fragments.ListFragment;
 
 public class AppActivity extends AppCompatActivity implements ListFragment.OnFragmentInteractionListener {
+  private ListFragment mListFragment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +26,42 @@ public class AppActivity extends AppCompatActivity implements ListFragment.OnFra
 
   private void loadFragment() {
     FragmentManager fragmentManager = getSupportFragmentManager();
-    ListFragment listFragment = ListFragment.newInstance();
+    mListFragment = ListFragment.newInstance();
     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-    fragmentTransaction.add(R.id.fragmentContainer, listFragment);
+    fragmentTransaction.add(R.id.fragmentContainer, mListFragment);
     fragmentTransaction.commit();
   }
+
+  private void removeFragment() {
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+    fragmentTransaction.remove(mListFragment);
+    fragmentTransaction.commit();
+  }
+
+  @Override
+  public void onCloseClicked() {
+    removeFragment();
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
