@@ -1,10 +1,13 @@
 package edu.cnm.bootcamp.kelly.firstandroidproject.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import edu.cnm.bootcamp.kelly.firstandroidproject.R;
 import edu.cnm.bootcamp.kelly.firstandroidproject.objects.Image;
@@ -53,9 +56,52 @@ public class ImageListAdapter extends BaseAdapter {
         txtImageTitle.setText(image.getTitle());
     }
 
+    ImageView imageView = (ImageView)convertView.findViewById(R.id.image);
+    if (imageView != null && image != null) {
+      Bitmap bitmap = image.getDownloadedImage(mContext);
+      if(bitmap != null) {
+        imageView.setImageBitmap(bitmap);
+      } else {
+          if (mContext instanceof Activity) {
+            image.downloadImage((Activity) mContext, new Runnable() {
+              @Override
+              public void run() {
+                notifyDataSetChanged();
+              }
+            });
+          }
+      }
+    }
     return convertView;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
